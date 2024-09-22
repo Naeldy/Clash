@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Selecionar Carta</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Selecionar Carta para {{ nickname }}</h1>
+        <form method="POST" action="{{ url_for('adicionar_carta', nickname=nickname) }}">
+            <div class="form-group">
+                <label for="carta">Escolha uma carta:</label>
+                <select name="carta" class="form-control" required>
+                    <option value="">Selecione uma carta</option>
+                    {% for carta in cartas %}
+                        <option value="{{ carta }}">{{ carta }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Adicionar Carta</button>
+            <a href="{{ url_for('index') }}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</body>
+</html>

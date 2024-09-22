@@ -1,0 +1,30 @@
+<!-- calcular_porcentagem.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Calcular Porcentagem</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Calcular Porcentagem de Vitórias/Derrotas para {{ nickname }}</h1>
+        <form method="POST">
+            <div class="form-group">
+                <label for="carta">Carta:</label>
+                <input type="text" name="carta" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="timestamp_inicial">Timestamp Inicial:</label>
+                <input type="datetime-local" name="timestamp_inicial" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="timestamp_final">Timestamp Final:</label>
+                <input type="datetime-local" name="timestamp_final" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Calcular</button>
+            <a href="{{ url_for('index') }}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</body>
+</html>

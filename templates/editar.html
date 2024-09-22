@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Editar Jogador</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Editar Jogador: {{ jogador.nickname }}</h1>
+        <form method="POST">
+            <div class="form-group">
+                <label for="tempo_jogo">Tempo de Jogo</label>
+                <input type="number" name="tempo_jogo" class="form-control" value="{{ jogador.tempo_jogo }}" required>
+            </div>
+            <div class="form-group">
+                <label for="trofeus">Troféus</label>
+                <input type="number" name="trofeus" class="form-control" value="{{ jogador.trofeus }}" required>
+            </div>
+            <div class="form-group">
+                <label for="nivel">Nível</label>
+                <input type="number" name="nivel" class="form-control" value="{{ jogador.nivel }}" required>
+            </div>
+            <button type="submit" class="btn btn-success">Salvar</button>
+        </form>
+        <form method="POST" action="{{ url_for('deletar', nickname=jogador.nickname) }}">
+            <button type="submit" class="btn btn-danger mt-3">Excluir Jogador</button>
+        </form>
+        <a href="{{ url_for('index') }}" class="btn btn-secondary mt-3">Voltar</a>
+    </div>
+</body>
+</html>
