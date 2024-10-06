@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+    <title>Jogadores</title>
+</head>
+<body>
+    <header>
+        <h1>Projeto para a disciplina de Banco de Dados NoSQL</h1>
+    </header>
+
+
+    <main>
+        <div class="introducao">
+            <p>Armazenar dados de batalhas do jogo em um BD NoSQL
+                para viabilizar consultas analíticas que permitam
+                analisar estatísticas de vitórias/derrotas associadas ao
+                uso das cartas, visando balancear o jogo
+            </p>
+            <br>
+            <p>O BD deve armazenar: Informações dos jogadores (nickname, tempo de jogo, troféus,
+                nível etc) e batalhas realizadas (tempo da batalha, número de
+                torres derrubadas de cada lado, vencedor, deck de batalha de
+                cada jogador usado da partida, quantidade de troféus de cada
+                jogador no momento da partida etc)
+            </p>
+        </div>
+
+        <div class="section tarefa_1">
+            <h2>Consulta 1</h2>
+            <h3>Calcule a porcentagem de vitórias e derrotas utilizando a carta X
+                (parâmetro) ocorridas em um intervalo de timestamps (parâmetro).</h3>
+                <div class="consulta"></div>
+        </div>
+
+        <div class="section tarefa_2">
+            <h2>Consulta 2</h2>
+            <h3>Liste os decks completos que produziram mais de X% (parâmetro) de
+                vitórias ocorridas em um intervalo de timestamps (parâmetro).</h3>
+                <div class="consulta"></div>
+        </div>
+
+        <div class="section tarefa_3">
+            <h2>Consulta 3</h2>
+            <h3>Calcule a quantidade de derrotas utilizando o combo de cartas
+                (X1,X2, ...) (parâmetro) ocorridas em um intervalo de timestamps
+                (parâmetro).</h3>
+                <div class="consulta"></div>
+        </div>
+
+        <div class="section tarefa_4">
+            <h2>Consulta 4</h2>
+            <h3>Calcule a quantidade de vitórias envolvendo a carta X (parâmetro) nos
+                casos em que o vencedor possui Z% (parâmetro) menos troféus do que
+                o perdedor, a partida durou menos de 2 minutos, e o perdedor
+                derrubou ao menos duas torres do adversário.</h3>
+                <div class="consulta"></div>
+        </div>
+
+        <div class="section tarefa_5">
+            <h2>Consulta 5</h2>
+            <h3>Liste o combo de cartas (eg: carta 1, carta 2, carta 3... carta n) de
+                tamanho N (parâmetro) que produziram mais de Y% (parâmetro) de
+                vitórias ocorridas em um intervalo de timestamps (parâmetro).</h3>
+                <div class="consulta"></div>
+        </div>
+
+        <div class="section tarefa_6">
+            <h2>Consulta 6</h2>
+            <h3>Explicação do que a consulta faz...</h3>
+            <div class="consulta"></div>
+        </div>
+
+        <div class="section tarefa_7">
+            <h2>Consulta 7</h2>
+            <h3>Explicação do que a consulta faz...</h3>
+            <div class="consulta"></div>
+        </div>
+
+        <div class="section tarefa_8">
+            <h2>Consulta 8</h2>
+            <h3>Explicação do que a consulta faz...</h3>
+            <div class="consulta"></div>
+        </div>
+
+    </main>
+
+
+    <footer>
+        <h4>Equipe:</h4>
+        <p>Luiz Florêncio</p>
+        <p>Jéssica</p>
+        <p>Guilherme</p>
+        <p>Godoy</p>
+        <p>Cinthia</p>
+        <p>Mariana</p>
+    </footer>
+</body>
+</html>
