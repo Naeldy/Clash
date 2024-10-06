@@ -7,31 +7,29 @@ Ele utiliza um banco de dados MongoDB para armazenar informações sobre jogador
 ## Tecnologias Utilizadas
 
 - **Flask**: Framework web para Python.
-- **MongoDB**: Banco de dados NoSQL para armazenamento de dados.
+- **Mongo Atlas**: Banco de dados NoSQL para armazenamento de dados.
 - **HTML/CSS**: Para a estrutura e estilo da interface.
 
 ## Como Começar
 
-### Pré-requisitos
+### Variáveis
+Crie um arquivo .env e preenchar os campos:
+**TOKEN=** 'que será a você cria ao registrar uma chave no site https://developer.clashroyale.com/#/';
+**CLUSTER=** 'o nome do seu cluster no mongodb Atlas';
+**USER_NAME=** 'nome do usuário de acesso';
+**PASSWORD=** 'a senha cadastrada do usuário de acesso'
 
-- Python 3.x
-- MongoDB
-- Dependências do Flask
-
-### Instalação
-
-git clone https://github.com/Naeldy/Clash.git
-cd clash
-pip install -r requirements.txt
-mongod
-python app.py
-
-## Acesse a aplicação em seu navegador: http://127.0.0.1:5000/
-
-## acessar API do Clash Royale
+### acessar API do Clash Royale
 - crie uma conta no www.developer.clashroyale.com/#/
 - crie uma Chave/Key em account => Create New Key => e use o seu IP público
 
+### Instalação
+git clone https://github.com/Naeldy/Clash.git
+cd clash
+pip install -r requirements.txt
+python app.py
+
+Acesse a aplicação em seu navegador: http://127.0.0.1:5000/
 
 
 
