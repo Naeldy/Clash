@@ -29,9 +29,11 @@ collection_players = db['cr_players']
 collection_battles = db['cr_battles']
 
 PLAYERs_TAG = [
-    '%232RPRP0RG', '%232QYVJ0GC', '%232QL0YCJR', '%232GGR2GPQ0', '%23GJV9GPUJJ', '%232YGQVGQ9', '%2322Y9CGYGQ',
+    '%232RPRP0RG', '%232QYVJ0GC', '%232QL0YCJR', '%232YGQVGQ9', '%2322Y9CGYGQ',
     '%232CLPLVGVP', '%23R09228V', '%23PP0VL8LC', '%23220L9GC2', '%232YJRUQ2Q', '%232Q8L8YQG', '%23QVPJRV', 
-    '%23P00809CUQ', '%2320R90LLPU', '%232PUJ2URC', '%238P2YR9', '%232JC0JRL2', '%232UQC9VP', '%23280UYY9R8'
+    '%23P00809CUQ', '%2320R90LLPU', '%232PUJ2URC', '%238P2YR9', '%232JC0JRL2', '%232UQC9VP', '%23280UYY9R8',
+    '%23J0VU9CGP', '%23UG0QG9RQG', '%23U2LYQJQVY', '%23U0GY2RV9Y', '%23Y022GRCJQ', '%238L0UJ9LYJ',
+    '%23U200V9P', '%232VGG29RJ2', '%23208YL8PL2J', '%238QRCJQ9Y'
 ]
 
 
@@ -57,9 +59,9 @@ def index():
                         for player in battle["team"]:
                             jogador = {
                                 "nickname": player["name"],
-                                "tempo_de_jogo": battle["battleTime"],  # ou algum cálculo que você fizer
+                                "tempo_de_jogo": battle["battleTime"], 
                                 "trofeus": player["startingTrophies"],
-                                "nivel": player["globalRank"]  # ou outro nível que você defina
+                                "nivel": player["globalRank"] 
                             }
 
                             # Inserir ou atualizar jogador no MongoDB
@@ -76,7 +78,10 @@ def index():
                                 "jogador1": battle["team"][0]["crowns"],
                                 "jogador2": battle["opponent"][0]["crowns"]
                             },
-                            "vencedor": battle["team"][0]["name"] if battle["team"][0]["crowns"] > battle["opponent"][0]["crowns"] else battle["opponent"][0]["name"],
+                            "vencedor": (
+                                "deck_jogador1" if battle["team"][0]["crowns"] < battle["opponent"][0]["crowns"] 
+                                else "deck_jogador2"
+                            ),
                             "deck_jogador1": [card["name"] for card in battle["team"][0]["cards"]],
                             "deck_jogador2": [card["name"] for card in battle["opponent"][0]["cards"]],
                             "trofeus_jogador1": battle["team"][0]["startingTrophies"],
@@ -100,15 +105,13 @@ def index():
 
     # CONSULTA 1
     try:
-        items_obj.append(calcular_porcentagem_vitorias_derrotas('Wizard', 1633046400, 1635638400)) # parâmmetros FIXOS
-        print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-        print(items_obj)
+        items_obj.append(calcular_porcentagem_vitorias_derrotas("Zap", 2024)) # parâmmetros FIXOS
     except Exception as err:
         print("ERRO na CONSULTA 1: ", err)
 
     # CONSULTA 2
     try:
-        items_obj.append(listar_decks_com_vitorias(3, 1633046400, 1635638400)) # parâmmetros FIXOS
+        items_obj.append(listar_decks_com_vitorias(50, 1609459200, 1725148799)) # parâmmetros FIXOS
     except Exception as err:
         print("ERRO na CONSULTA 2: ", err)
 

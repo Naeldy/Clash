@@ -26,6 +26,7 @@
             <h3>Calcule a porcentagem de vitórias e derrotas utilizando a carta X (parâmetro) ocorridas em um intervalo de timestamps (parâmetro).</h3>
                 <div class="consulta">
                     <p>Estatísticas da Carta: {{ resultados[0].carta }}</p>
+                    <p>Período: {{ resultados[0].ano }}</p>
                     <p>Total de Batalhas: {{ resultados[0].total_battles }}</p>
                     <p>Total de Vitórias: {{ resultados[0].total_victories }}</p>
                     <p>Porcentagem de Vitórias: {{ resultados[0].win_percentage }}%</p>
@@ -38,7 +39,17 @@
             <h2>Consulta 2</h2>
             <h3>Liste os decks completos que produziram mais de X% (parâmetro) de vitórias ocorridas em um intervalo de timestamps (parâmetro).</h3>
                 <div class="consulta">
-
+                    {% if resultados[1] and resultados[1]|length > 0 %}
+                        {% for deck in resultados[1] %}
+                            <p>Deck: {{ deck.deck | join(', ') }}</p>
+                            <p>Vitórias: {{ deck.victories }}</p>
+                            <p>Total de Batalhas: {{ deck.total }}</p>
+                            <p>Porcentagem de Vitórias: {{ deck.percentage }}%</p>
+                            <hr>  <!-- Linha horizontal para separar os decks -->
+                        {% endfor %}
+                    {% else %}
+                        <p>Nenhum deck encontrado que atenda aos critérios.</p>
+                    {% endif %}
                 </div>
         </div>
 

@@ -2,6 +2,8 @@
 import requests
 from itertools import combinations
 from config import client
+import calendar
+from datetime import datetime
 
 
 db = client['clash_royale_project']
@@ -12,16 +14,19 @@ collection_battles = db['cr_battles']
 
 
 # CONSULTA 1
-def calcular_porcentagem_vitorias_derrotas(carta, start_timestamp, end_timestamp):
+def calcular_porcentagem_vitorias_derrotas(carta, ano):
+    primeiro_dia = f"{ano}0101T000000.000Z"  # 1º de janeiro
+    ultimo_dia = f"{ano}1231T235959.999Z"   # 31 de dezembro
+
     # Filtrar batalhas no intervalo e que incluem a carta especificada
     battles = collection_battles.find({
         "tempo_da_batalha": {
-            "$gte": start_timestamp,
-            "$lte": end_timestamp
+            "$gte": primeiro_dia,
+            "$lte": ultimo_dia
         },
         "$or": [
-            {"deck_jogador1": carta},
-            {"deck_jogador2": carta}
+            {"deck_jogador1": {"$in": [carta]}},
+            {"deck_jogador2": {"$in": [carta]}}
         ]
     })
     
@@ -33,9 +38,9 @@ def calcular_porcentagem_vitorias_derrotas(carta, start_timestamp, end_timestamp
         total_battles += 1
         
         # Verificar se a carta é parte do time vencedor
-        if battle["vencedor"] in battle["deck_jogador1"]:
+        if carta in battle["deck_jogador1"] and battle["vencedor"] == "deck_jogador1":
             total_victories += 1
-        elif battle["vencedor"] in battle["deck_jogador2"]:
+        elif carta in battle["deck_jogador2"] and battle["vencedor"] == "deck_jogador2":
             total_victories += 1
 
     # Calcular porcentagens
@@ -48,6 +53,7 @@ def calcular_porcentagem_vitorias_derrotas(carta, start_timestamp, end_timestamp
 
     return {
         "carta": carta,
+        "Período": ano,
         "total_battles": total_battles,
         "total_victories": total_victories,
         "win_percentage": round(win_percentage, 2),
@@ -85,9 +91,9 @@ def listar_decks_com_vitorias(min_victory_percentage, start_timestamp, end_times
         deck_stats[deck2]["total"] += 1
 
         # Verifica se há vencedor e atualiza as vitórias
-        if battle["vencedor"] in battle["deck_jogador1"]:
+        if battle["vencedor"] == "deck_jogador1":
             deck_stats[deck1]["victories"] += 1
-        elif battle["vencedor"] in battle["deck_jogador2"]:
+        elif battle["vencedor"] == "deck_jogador2":
             deck_stats[deck2]["victories"] += 1
 
     # Filtrar decks com base na porcentagem de vitórias
