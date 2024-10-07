@@ -14,10 +14,10 @@ Ele utiliza um banco de dados MongoDB para armazenar informações sobre jogador
 
 ### Variáveis
 Crie um arquivo .env e preenchar os campos:
-**TOKEN=** 'que será a você cria ao registrar uma chave no site https://developer.clashroyale.com/#/';
-**CLUSTER=** 'o nome do seu cluster no mongodb Atlas';
-**USER_NAME=** 'nome do usuário de acesso';
-**PASSWORD=** 'a senha cadastrada do usuário de acesso'
+* **TOKEN=** 'que será a você cria ao registrar uma chave no site https://developer.clashroyale.com/#/';
+* **CLUSTER=** 'o nome do seu cluster no mongodb Atlas';
+* **USER_NAME=** 'nome do usuário de acesso';
+* **PASSWORD=** 'a senha cadastrada do usuário de acesso'
 
 ### acessar API do Clash Royale
 - crie uma conta no www.developer.clashroyale.com/#/

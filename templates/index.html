@@ -15,75 +15,107 @@
 
     <main>
         <div class="introducao">
-            <p>Armazenar dados de batalhas do jogo em um BD NoSQL
-                para viabilizar consultas analíticas que permitam
-                analisar estatísticas de vitórias/derrotas associadas ao
-                uso das cartas, visando balancear o jogo
-            </p>
+            <p>Armazenar dados de batalhas do jogo em um BD NoSQL para viabilizar consultas analíticas que permitam analisar estatísticas de vitórias/derrotas associadas ao uso das cartas, visando balancear o jogo.</p>
             <br>
-            <p>O BD deve armazenar: Informações dos jogadores (nickname, tempo de jogo, troféus,
-                nível etc) e batalhas realizadas (tempo da batalha, número de
-                torres derrubadas de cada lado, vencedor, deck de batalha de
-                cada jogador usado da partida, quantidade de troféus de cada
-                jogador no momento da partida etc)
-            </p>
+            <p>O BD deve armazenar: Informações dos jogadores (nickname, tempo de jogo, troféus, nível etc) e batalhas realizadas (tempo da batalha, número de torres derrubadas de cada lado, vencedor, deck de batalha de cada jogador usado da partida, quantidade de troféus de cada jogador no momento da partida etc).</p>
         </div>
+
 
         <div class="section tarefa_1">
             <h2>Consulta 1</h2>
-            <h3>Calcule a porcentagem de vitórias e derrotas utilizando a carta X
-                (parâmetro) ocorridas em um intervalo de timestamps (parâmetro).</h3>
-                <div class="consulta"></div>
+            <h3>Calcule a porcentagem de vitórias e derrotas utilizando a carta X (parâmetro) ocorridas em um intervalo de timestamps (parâmetro).</h3>
+                <div class="consulta">
+                    <p>Estatísticas da Carta: {{ resultados[0].carta }}</p>
+                    <p>Total de Batalhas: {{ resultados[0].total_battles }}</p>
+                    <p>Total de Vitórias: {{ resultados[0].total_victories }}</p>
+                    <p>Porcentagem de Vitórias: {{ resultados[0].win_percentage }}%</p>
+                    <p>Porcentagem de Derrotas: {{ resultados[0].loss_percentage }}%</p>
+                </div>
         </div>
+
 
         <div class="section tarefa_2">
             <h2>Consulta 2</h2>
-            <h3>Liste os decks completos que produziram mais de X% (parâmetro) de
-                vitórias ocorridas em um intervalo de timestamps (parâmetro).</h3>
-                <div class="consulta"></div>
+            <h3>Liste os decks completos que produziram mais de X% (parâmetro) de vitórias ocorridas em um intervalo de timestamps (parâmetro).</h3>
+                <div class="consulta">
+
+                </div>
         </div>
+
 
         <div class="section tarefa_3">
             <h2>Consulta 3</h2>
-            <h3>Calcule a quantidade de derrotas utilizando o combo de cartas
-                (X1,X2, ...) (parâmetro) ocorridas em um intervalo de timestamps
-                (parâmetro).</h3>
-                <div class="consulta"></div>
+            <h3>Calcule a quantidade de derrotas utilizando o combo de cartas (X1,X2, ...) (parâmetro) ocorridas em um intervalo de timestamps (parâmetro).</h3>
+                <div class="consulta">
+                    <p>Total de Derrotas para o Combo: {{ resultados[2].combo }}</p>
+                    <p>Quantidade de derrotas: {{ resultados[2].total_derrotas }}</p>
+                </div>
         </div>
+
 
         <div class="section tarefa_4">
             <h2>Consulta 4</h2>
-            <h3>Calcule a quantidade de vitórias envolvendo a carta X (parâmetro) nos
-                casos em que o vencedor possui Z% (parâmetro) menos troféus do que
-                o perdedor, a partida durou menos de 2 minutos, e o perdedor
-                derrubou ao menos duas torres do adversário.</h3>
-                <div class="consulta"></div>
+            <h3>Calcule a quantidade de vitórias envolvendo a carta X (parâmetro) nos casos em que o vencedor possui Z% (parâmetro) menos troféus do que o perdedor, a partida durou menos de 2 minutos, e o perdedor derrubou ao menos duas torres do adversário.</h3>
+                <div class="consulta">
+                    <p>Total de Vitórias para a Carta: {{ resultados[3].carta }}</p>
+                    <p>Quantidade de vitórias: {{ resultados[3].total_vitorias }}</p>
+                </div>
         </div>
+
 
         <div class="section tarefa_5">
             <h2>Consulta 5</h2>
-            <h3>Liste o combo de cartas (eg: carta 1, carta 2, carta 3... carta n) de
-                tamanho N (parâmetro) que produziram mais de Y% (parâmetro) de
-                vitórias ocorridas em um intervalo de timestamps (parâmetro).</h3>
-                <div class="consulta"></div>
+            <h3>Liste o combo de cartas (eg: carta 1, carta 2, carta 3... carta n) de tamanho N (parâmetro) que produziram mais de Y% (parâmetro) de vitórias ocorridas em um intervalo de timestamps (parâmetro).</h3>
+                <div class="consulta">
+                    <!-- <h1>Combos Vitoriosos</h1> -->
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Combo</th>
+                                <th>Vitórias</th>
+                                <th>Total de Batalhas</th>
+                                <th>Porcentagem de Vitórias</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for resultado in resultados[4] %}
+                            <tr>
+                                <td>{{ resultado.combo | join(', ') }}</td>
+                                <td>{{ resultado.victories }}</td>
+                                <td>{{ resultado.total }}</td>
+                                <td>{{ resultado.percentage }}%</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
         </div>
+
 
         <div class="section tarefa_6">
             <h2>Consulta 6</h2>
             <h3>Explicação do que a consulta faz...</h3>
-            <div class="consulta"></div>
+            <div class="consulta">
+
+            </div>
         </div>
+
 
         <div class="section tarefa_7">
             <h2>Consulta 7</h2>
             <h3>Explicação do que a consulta faz...</h3>
-            <div class="consulta"></div>
+            <div class="consulta">
+                
+            </div>
         </div>
+
 
         <div class="section tarefa_8">
             <h2>Consulta 8</h2>
             <h3>Explicação do que a consulta faz...</h3>
-            <div class="consulta"></div>
+            <div class="consulta">
+
+            </div>
         </div>
 
     </main>
