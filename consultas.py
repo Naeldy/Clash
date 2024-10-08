@@ -24,6 +24,13 @@ def timestamp_para_iso8601(timestamp):
 
 # CONSULTA 1
 def calcular_porcentagem_vitorias_derrotas(carta, ano):
+
+    #primeiro_dia = timestamp_para_iso8601(ano1)
+    #ultimo_dia = timestamp_para_iso8601(ano2)
+
+    #print(primeiro_dia)
+    #print(ultimo_dia)
+
     primeiro_dia = f"{ano}0101T000000.000Z"  # 1º de janeiro
     ultimo_dia = f"{ano}1231T235959.999Z"   # 31 de dezembro
 
@@ -77,8 +84,14 @@ def calcular_porcentagem_vitorias_derrotas(carta, ano):
 def listar_decks_com_vitorias(min_victory_percentage, start_year, end_year):
     # PROBLEMA: REQUER AGREGAR OS DECKS QUE SÃO IGUAIS
 
-    primeiro_dia = f"{start_year}0101T000000.000Z"
-    ultimo_dia = f"{end_year}1231T235959.999Z"  
+    primeiro_dia = timestamp_para_iso8601(start_year)
+    ultimo_dia = timestamp_para_iso8601(end_year)
+
+    print(primeiro_dia)
+    print(ultimo_dia)
+
+    #primeiro_dia = f"{start_year}0101T000000.000Z"
+    #ultimo_dia = f"{end_year}1231T235959.999Z"  
 
     battles = collection_battles.find({
         "tempo_da_batalha": {

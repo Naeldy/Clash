@@ -111,7 +111,7 @@ def index():
 
     # CONSULTA 2
     try:
-        items_obj.append(listar_decks_com_vitorias(70, 2023, 2024)) # parâmmetros FIXOS
+        items_obj.append(listar_decks_com_vitorias(70, 1672537600, 1735689600)) # parâmmetros FIXOS
     except Exception as err:
         print("ERRO na CONSULTA 2: ", err)
 
