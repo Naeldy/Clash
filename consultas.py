@@ -4,11 +4,20 @@ from itertools import combinations
 from config import client
 import calendar
 from datetime import datetime
+from collections import defaultdict
+from datetime import datetime, timezone
 
 
 db = client['clash_royale_project']
 collection_players = db['cr_players']
 collection_battles = db['cr_battles']
+
+
+def timestamp_para_iso8601(timestamp):
+    dt_object = datetime.fromtimestamp(timestamp, tz=timezone.utc)
+    formatted_date = dt_object.strftime("%Y%m%dT%H%M%S.000Z")    
+    return formatted_date
+
 
 
 
@@ -65,29 +74,29 @@ def calcular_porcentagem_vitorias_derrotas(carta, ano):
 
 
 # CONSULTA 2
-def listar_decks_com_vitorias(min_victory_percentage, start_timestamp, end_timestamp):
-    # Filtrar batalhas no intervalo de timestamps
+def listar_decks_com_vitorias(min_victory_percentage, start_year, end_year):
+    # PROBLEMA: REQUER AGREGAR OS DECKS QUE SÃO IGUAIS
+
+    primeiro_dia = f"{start_year}0101T000000.000Z"
+    ultimo_dia = f"{end_year}1231T235959.999Z"  
+
     battles = collection_battles.find({
         "tempo_da_batalha": {
-            "$gte": start_timestamp,
-            "$lte": end_timestamp
+            "$gte": primeiro_dia,
+            "$lte": ultimo_dia
         }
     })
 
-    deck_stats = {}
+    deck_stats = defaultdict(lambda: {"total": 0, "victories": 0})
 
     # Contar vitórias e batalhas para cada deck
     for battle in battles:
         # Verifica o deck do jogador 1
-        deck1 = tuple(battle["deck_jogador1"])  # Use tuple para chave imutável
-        if deck1 not in deck_stats:
-            deck_stats[deck1] = {"total": 0, "victories": 0}
+        deck1 = tuple(sorted(battle["deck_jogador1"]))  # Ordena as cartas para padronização
         deck_stats[deck1]["total"] += 1
 
         # Verifica o deck do jogador 2
-        deck2 = tuple(battle["deck_jogador2"])
-        if deck2 not in deck_stats:
-            deck_stats[deck2] = {"total": 0, "victories": 0}
+        deck2 = tuple(sorted(battle["deck_jogador2"]))
         deck_stats[deck2]["total"] += 1
 
         # Verifica se há vencedor e atualiza as vitórias
@@ -109,6 +118,8 @@ def listar_decks_com_vitorias(min_victory_percentage, start_timestamp, end_times
                     "percentage": round(victory_percentage, 2)
                 })
 
+    winning_decks = sorted(winning_decks, key=lambda x: x["total"], reverse=True)
+
     return winning_decks
 
 
@@ -116,12 +127,15 @@ def listar_decks_com_vitorias(min_victory_percentage, start_timestamp, end_times
 
 
 # CONSULTA 3
-def calcular_derrotas_combo(combo, start_timestamp, end_timestamp):
-    # Filtrar batalhas no intervalo de timestamps
+def calcular_derrotas_combo(combo, start_year, end_year):
+
+    primeiro_dia = f"{start_year}0101T000000.000Z"
+    ultimo_dia = f"{end_year}0101T000000.000Z" 
+
     battles = collection_battles.find({
         "tempo_da_batalha": {
-            "$gte": start_timestamp,
-            "$lte": end_timestamp
+            "$gte": primeiro_dia,
+            "$lte": ultimo_dia
         }
     })
 
@@ -133,25 +147,19 @@ def calcular_derrotas_combo(combo, start_timestamp, end_timestamp):
         deck2 = battle["deck_jogador2"]
         
         # Verifica se o combo está no deck do jogador 1
-        if set(combo).issubset(set(deck1)) and battle["vencedor"] in deck2:
+        if set(combo).issubset(set(deck1)) and battle["vencedor"] == "deck_jogador1":
             total_derrotas += 1
             
         # Verifica se o combo está no deck do jogador 2
-        elif set(combo).issubset(set(deck2)) and battle["vencedor"] in deck1:
+        elif set(combo).issubset(set(deck2)) and battle["vencedor"] == "deck_jogador2":
             total_derrotas += 1
 
-    return total_derrotas
-
-'''
-def derrotas_combo():
-    combo = request.form.getlist('combo')  # Lista de cartas recebida do formulário
-    start_timestamp = int(request.form['start_timestamp'])  # Timestamp inicial
-    end_timestamp = int(request.form['end_timestamp'])      # Timestamp final
-
-    resultado = calcular_derrotas_combo(combo, start_timestamp, end_timestamp)
-
-    return render_template('resultado_derrotas.html', combo=combo, total_derrotas=resultado)
-'''
+    print(total_derrotas)
+    print(combo)
+    return {
+        "combo": combo,
+        "total_derrotas": total_derrotas
+    }
 
 
 
@@ -258,7 +266,37 @@ def listar_combos_vitoriosos(tamanho_combo, percentual, start_timestamp, end_tim
 
 
 # CONSULTA 6
+def carta_mais_presente_em_decks(trof_possivel):
+    # Filtrar batalhas de jogadores com mais de 5000 troféus
+    battles = collection_battles.find({
+        "$or": [
+            {"trofeus_jogador1": {"$gt": trof_possivel}},
+            {"trofeus_jogador2": {"$gt": trof_possivel}}
+        ]
+    })
 
+    carta_stats = defaultdict(int)
+
+    for battle in battles:
+        # Contar cartas no deck do jogador 1
+        for carta in battle["deck_jogador1"]:
+            carta_stats[carta] += 1
+
+        # Contar cartas no deck do jogador 2
+        for carta in battle["deck_jogador2"]:
+            carta_stats[carta] += 1
+
+    # Encontrar a carta mais presente
+    carta_mais_presente = max(carta_stats, key=carta_stats.get)
+    quantidade_presenca = carta_stats[carta_mais_presente]
+
+    print("aaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+    print(carta_mais_presente)
+    print(quantidade_presenca)
+    return {
+        "carta": carta_mais_presente,
+        "quantidade": quantidade_presenca
+    }
 
 
 # CONSULTA 7

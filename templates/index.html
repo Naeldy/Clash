@@ -37,7 +37,7 @@
 
         <div class="section tarefa_2">
             <h2>Consulta 2</h2>
-            <h3>Liste os decks completos que produziram mais de X% (parâmetro) de vitórias ocorridas em um intervalo de timestamps (parâmetro).</h3>
+            <h3>Liste os decks completos que produziram mais de 70% (parâmetro) de vitórias ocorridas em um intervalo de timestamps (parâmetro).</h3>
                 <div class="consulta">
                     {% if resultados[1] and resultados[1]|length > 0 %}
                         {% for deck in resultados[1] %}
@@ -64,21 +64,21 @@
         </div>
 
 
-        <div class="section tarefa_4">
+        <!-- <div class="section tarefa_4">
             <h2>Consulta 4</h2>
             <h3>Calcule a quantidade de vitórias envolvendo a carta X (parâmetro) nos casos em que o vencedor possui Z% (parâmetro) menos troféus do que o perdedor, a partida durou menos de 2 minutos, e o perdedor derrubou ao menos duas torres do adversário.</h3>
                 <div class="consulta">
                     <p>Total de Vitórias para a Carta: {{ resultados[3].carta }}</p>
                     <p>Quantidade de vitórias: {{ resultados[3].total_vitorias }}</p>
                 </div>
-        </div>
+        </div> -->
 
 
-        <div class="section tarefa_5">
+        <!-- <div class="section tarefa_5">
             <h2>Consulta 5</h2>
             <h3>Liste o combo de cartas (eg: carta 1, carta 2, carta 3... carta n) de tamanho N (parâmetro) que produziram mais de Y% (parâmetro) de vitórias ocorridas em um intervalo de timestamps (parâmetro).</h3>
                 <div class="consulta">
-                    <!-- <h1>Combos Vitoriosos</h1> -->
+                     <h1>Combos Vitoriosos</h1>
                     <table>
                         <thead>
                             <tr>
@@ -100,14 +100,15 @@
                         </tbody>
                     </table>
                 </div>
-        </div>
+        </div> -->
 
 
         <div class="section tarefa_6">
             <h2>Consulta 6</h2>
-            <h3>Explicação do que a consulta faz...</h3>
+            <h3>Consulta que identifica a carta mais presente nos decks de jogadores com mais de 5000 troféus</h3>
             <div class="consulta">
-
+                <p>Carta mais presente: {{ resultados[-1].carta }}</p>
+                <p>Quantidade de presenças: {{ resultados[-1].quantidade }}</p>
             </div>
         </div>
 
