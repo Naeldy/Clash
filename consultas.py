@@ -290,9 +290,6 @@ def carta_mais_presente_em_decks(trof_possivel):
     carta_mais_presente = max(carta_stats, key=carta_stats.get)
     quantidade_presenca = carta_stats[carta_mais_presente]
 
-    print("aaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-    print(carta_mais_presente)
-    print(quantidade_presenca)
     return {
         "carta": carta_mais_presente,
         "quantidade": quantidade_presenca
@@ -300,11 +297,62 @@ def carta_mais_presente_em_decks(trof_possivel):
 
 
 # CONSULTA 7
+def contar_decks_por_combo(carta1, carta2):
+    cartas_combo = [carta1, carta2]
+    
+    # Filtrar batalhas que têm decks que contêm a combinação especificada
+    battles = collection_battles.find({
+        "$or": [
+            {"deck_jogador1": {"$all": cartas_combo}},
+            {"deck_jogador2": {"$all": cartas_combo}}
+        ]
+    })
 
+    # Contar quantos decks têm a combinação
+    total_decks = 0
+    for battle in battles:
+        # Contar ambos os decks se contêm a combinação
+        if set(cartas_combo).issubset(set(battle["deck_jogador1"])):
+            total_decks += 1
+        if set(cartas_combo).issubset(set(battle["deck_jogador2"])):
+            total_decks += 1
+
+    return {
+        "combo": cartas_combo,
+        "total_decks": total_decks
+    }
 
 
 # CONSULTA 8
+def carta_mais_presente_jogadores_baixa_troféus(limite_trofeus, numero_de_cartas):
+    # Filtrar jogadores com menos de 3500 troféu
+    battles = collection_battles.find({
+        "$or": [
+            {"trofeus_jogador1": {"$lt": limite_trofeus}},
+            {"trofeus_jogador2": {"$lt": limite_trofeus}}
+        ]
+    })
 
+    carta_frequencia = defaultdict(int)
+
+    # Contar a frequência de cartas nos decks dos jogadores filtrados
+    for battle in battles:
+        # Verifica os troféus do jogador 1
+        if battle["trofeus_jogador1"] < limite_trofeus:
+            deck1 = battle["deck_jogador1"]
+            for carta in deck1:
+                carta_frequencia[carta] += 1
+        
+        # Verifica os troféus do jogador 2
+        if battle["trofeus_jogador2"] < limite_trofeus:
+            deck2 = battle["deck_jogador2"]
+            for carta in deck2:
+                carta_frequencia[carta] += 1
+
+    # Obter as três cartas mais comuns
+    top_cartas = sorted(carta_frequencia.items(), key=lambda x: x[1], reverse=True)[:numero_de_cartas]
+
+    return [{"carta": carta, "frequencia": freq} for carta, freq in top_cartas]
 
 
 

@@ -107,26 +107,31 @@
             <h2>Consulta 6</h2>
             <h3>Consulta que identifica a carta mais presente nos decks de jogadores com mais de 5000 troféus</h3>
             <div class="consulta">
-                <p>Carta mais presente: {{ resultados[-1].carta }}</p>
-                <p>Quantidade de presenças: {{ resultados[-1].quantidade }}</p>
+                <p>Carta mais presente: {{ resultados[-3].carta }}</p>
+                <p>Quantidade de presenças: {{ resultados[-3].quantidade }}</p>
             </div>
         </div>
 
 
         <div class="section tarefa_7">
             <h2>Consulta 7</h2>
-            <h3>Explicação do que a consulta faz...</h3>
+            <h3>Consulta que conta quantos decks têm uma combinação específica de duas cartas.</h3>
             <div class="consulta">
-                
+                <p>Combinação de cartas: {{ resultados[-2].combo[0] }} e {{ resultados[-2].combo[1] }}</p>
+                <p>Total de decks com esta combinação: {{ resultados[-2].total_decks }}</p>
             </div>
         </div>
 
 
         <div class="section tarefa_8">
             <h2>Consulta 8</h2>
-            <h3>Explicação do que a consulta faz...</h3>
-            <div class="consulta">
-
+            <h3>Busca as 3 cartas que mais aparecem nos decks dos jogadores com menos de 3500 troféus.</h3>
+            <div class="consulta consulta8">
+                <ul>
+                    {% for carta in resultados[-1] %}
+                        <li><strong>Carta:</strong> {{ carta.carta }} - <strong>Frequência:</strong> {{ carta.frequencia }}</li>
+                    {% endfor %}
+                </ul>
             </div>
         </div>
 

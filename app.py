@@ -4,7 +4,7 @@ from flask import Flask, render_template
 import os
 from dotenv import load_dotenv
 from config import client
-from consultas import calcular_porcentagem_vitorias_derrotas, listar_decks_com_vitorias, calcular_derrotas_combo, calcular_vitorias_carta, listar_combos_vitoriosos, carta_mais_presente_em_decks
+from consultas import calcular_porcentagem_vitorias_derrotas, listar_decks_com_vitorias, calcular_derrotas_combo, calcular_vitorias_carta, listar_combos_vitoriosos, carta_mais_presente_em_decks, contar_decks_por_combo, carta_mais_presente_jogadores_baixa_troféus
 
 
 # Carregar variáveis de ambiente do arquivo .env
@@ -121,6 +121,7 @@ def index():
     except Exception as err:
         print("ERRO na CONSULTA 3: ", err)
 
+    '''
     # CONSULTA 4
     try:
         items_obj.append(calcular_vitorias_carta("Arqueira", 60)) # parâmmetros FIXOS
@@ -132,29 +133,26 @@ def index():
         items_obj.append(listar_combos_vitoriosos(2, 50, 1633046400, 1635638400)) # parâmmetros FIXOS
     except Exception as err:
         print("ERRO na CONSULTA 5: ", err)
-
+    '''
     
     # CONSULTA 6
     try:
         items_obj.append(carta_mais_presente_em_decks(5000)) # parâmmetros FIXOS
     except Exception as err:
         print("ERRO: ", err)
-    '''
+    
     # CONSULTA 7
     try:
-        items_obj[6] = calcular_porcentagem_vitorias_derrotas(carta, start_timestamp, end_timestamp) # parâmmetros FIXOS
+        items_obj.append(contar_decks_por_combo("Skeleton Dragons", "Inferno Dragon")) # parâmmetros FIXOS
     except Exception as err:
         print("ERRO: ", err)
-
+    
     # CONSULTA 8
     try:
-        items_obj[7] = calcular_porcentagem_vitorias_derrotas(carta, start_timestamp, end_timestamp) # parâmmetros FIXOS
+        items_obj.append(carta_mais_presente_jogadores_baixa_troféus(4000, 3)) # parâmmetros FIXOS
     except Exception as err:
         print("ERRO: ", err)
-    '''
-
-    print("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
-    print(items_obj)
+    
 
 
     # Renderizar o template HTML com os dados das cartas
